@@ -1,0 +1,2727 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_bab99a47621131f5ff3edbc1b240a4f3 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+<div style="
+    position:fixed;
+    bottom:30px;
+    left:20px;
+    z-index:9999;
+    width:350px;
+    max-width:calc(100vw - 40px);
+    max-height:65vh;
+    overflow-y:auto;
+    box-sizing:border-box;
+    background:white;
+    padding:14px 16px;
+    border:1px solid #bbb;
+    border-radius:5px;
+    box-shadow:0 1px 5px rgba(0,0,0,0.2);
+    font-family:Arial,sans-serif;
+    font-size:13px;
+    line-height:1.45;
+">
+    <div style="font-weight:bold; margin-bottom:10px;">
+        Charging Location Priorities — 1% EV Market Share
+    </div>
+
+    <div style="
+        display:flex;
+        align-items:center;
+        gap:10px;
+        margin-bottom:8px;
+    ">
+        
+    <svg xmlns="http://www.w3.org/2000/svg"
+         width="16" height="16"
+         viewBox="0 0 100 100"
+         style="display:block; overflow:visible;">
+        
+        <rect
+            x="3" y="3"
+            width="94" height="94"
+            fill="black"
+            fill-opacity="0.65"
+            stroke="black"
+            stroke-opacity="0.85"
+            stroke-width="1.5"
+            vector-effect="non-scaling-stroke"
+        />
+        
+    </svg>
+    
+        <span>Medium-duty trucks (MDTs)</span>
+    </div>
+
+    <div style="display:flex; align-items:center; gap:10px;">
+        
+    <svg xmlns="http://www.w3.org/2000/svg"
+         width="16" height="16"
+         viewBox="0 0 100 100"
+         style="display:block; overflow:visible;">
+        
+        <polygon
+            points="50,3 97,97 3,97"
+            fill="black"
+            fill-opacity="0.65"
+            stroke="black"
+            stroke-opacity="0.85"
+            stroke-width="1.5"
+            vector-effect="non-scaling-stroke"
+        />
+        
+    </svg>
+    
+        <span>Heavy-duty trucks (HDTs)</span>
+    </div>
+
+    <hr style="border:0; border-top:1px solid #ddd; margin:12px 0;">
+
+    <div style="font-weight:bold; margin-bottom:7px;">
+        Priority
+    </div>
+
+    <div>
+<div style="display:flex; gap:20px; flex-wrap:wrap;">
+    <span style="color:red; font-weight:bold;">High</span>
+    <span style="color:green; font-weight:bold;">Medium</span>
+    <span style="color:blue; font-weight:bold;">Low</span>
+</div>
+</div>
+
+    <div style="margin-top:12px; color:#555; font-size:12px;">
+        Marker size indicates the required number of chargers.
+    </div>
+
+    <hr style="border:0; border-top:1px solid #ddd; margin:12px 0;">
+
+    <div style="margin-bottom:10px;">
+        <b>Note:</b> Use the layer control in the top right corner
+to show or hide different layers.
+    </div>
+
+    <div>
+        <b>Note:</b> For access to detailed data or additional
+        information, please contact <b>Shafiq Bari</b> from the
+        Michigan Office of Future Mobility &amp; Electrification
+        (OFME) at
+        <a href="mailto:BariS2@michigan.gov">BariS2@michigan.gov</a>
+        or <b>Dr. Mehrnaz Ghamami</b> from Michigan State University at
+        <a href="mailto:ghamamim@msu.edu">ghamamim@msu.edu</a>.
+    </div>
+</div>
+    
+            <div class="folium-map" id="map_bab99a47621131f5ff3edbc1b240a4f3" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_bab99a47621131f5ff3edbc1b240a4f3 = L.map(
+                "map_bab99a47621131f5ff3edbc1b240a4f3",
+                {
+                    center: [44.08063205454547, -85.06084672727272],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 6,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_8f351fcb8064183c3e4a455de689540d = L.tileLayer(
+                "https://basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png?key=cb1_4pds_1_422a664c316089de45e7a6cb",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_8f351fcb8064183c3e4a455de689540d.addTo(map_bab99a47621131f5ff3edbc1b240a4f3);
+        
+    
+            var feature_group_65964524600b5bc787cc3acdb3acaf02 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var marker_655e3f572f13784f5c6f956bf8f62978 = L.marker(
+                [42.698293, -83.276955],
+                {
+}
+            ).addTo(feature_group_65964524600b5bc787cc3acdb3acaf02);
+        
+    
+            var div_icon_928cd70d9164f73ee846cdba2d2bf70a = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003crect\n            x=\"3\" y=\"3\"\n            width=\"94\" height=\"94\"\n            fill=\"red\"\n            fill-opacity=\"0.65\"\n            stroke=\"red\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "mdt-priority-marker",
+});
+        
+    
+        var popup_ef7945993713dbf9d13418719ddc99fd = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_641d437f214423b7366ffdc914a7298f = $(`<div id="html_641d437f214423b7366ffdc914a7298f" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> MDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> High<br>         <b>Rank:</b> 1<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 42.698293<br>         <b>Longitude:</b> -83.276955     </div>     </div>`)[0];
+                popup_ef7945993713dbf9d13418719ddc99fd.setContent(html_641d437f214423b7366ffdc914a7298f);
+            
+        
+
+        marker_655e3f572f13784f5c6f956bf8f62978.bindPopup(popup_ef7945993713dbf9d13418719ddc99fd)
+        ;
+
+        
+    
+    
+            marker_655e3f572f13784f5c6f956bf8f62978.bindTooltip(
+                `<div>
+                     MDT | 1% Market Share<br>Priority: High<br>Rank: 1<br>Required chargers: 2<br>Latitude: 42.698293<br>Longitude: -83.276955
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_655e3f572f13784f5c6f956bf8f62978.setIcon(div_icon_928cd70d9164f73ee846cdba2d2bf70a);
+            
+    
+            var marker_f6276762b4e25fe71916a1a39d6ea4a5 = L.marker(
+                [42.272121, -84.427015],
+                {
+}
+            ).addTo(feature_group_65964524600b5bc787cc3acdb3acaf02);
+        
+    
+            var div_icon_159a774106a5bafe54c7028dbe712ab0 = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003crect\n            x=\"3\" y=\"3\"\n            width=\"94\" height=\"94\"\n            fill=\"red\"\n            fill-opacity=\"0.65\"\n            stroke=\"red\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "mdt-priority-marker",
+});
+        
+    
+        var popup_b166c5b8323519cdd3af6b9cef41ce4e = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_dde1c2dd133224edf9ceb0277311a449 = $(`<div id="html_dde1c2dd133224edf9ceb0277311a449" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> MDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> High<br>         <b>Rank:</b> 2<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 42.272121<br>         <b>Longitude:</b> -84.427015     </div>     </div>`)[0];
+                popup_b166c5b8323519cdd3af6b9cef41ce4e.setContent(html_dde1c2dd133224edf9ceb0277311a449);
+            
+        
+
+        marker_f6276762b4e25fe71916a1a39d6ea4a5.bindPopup(popup_b166c5b8323519cdd3af6b9cef41ce4e)
+        ;
+
+        
+    
+    
+            marker_f6276762b4e25fe71916a1a39d6ea4a5.bindTooltip(
+                `<div>
+                     MDT | 1% Market Share<br>Priority: High<br>Rank: 2<br>Required chargers: 2<br>Latitude: 42.272121<br>Longitude: -84.427015
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_f6276762b4e25fe71916a1a39d6ea4a5.setIcon(div_icon_159a774106a5bafe54c7028dbe712ab0);
+            
+    
+            var marker_31a11a2f79c8d829ebcf595c6a442878 = L.marker(
+                [43.338786, -86.244265],
+                {
+}
+            ).addTo(feature_group_65964524600b5bc787cc3acdb3acaf02);
+        
+    
+            var div_icon_90c3c8f24494a6ac52be4b25758d23dd = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003crect\n            x=\"3\" y=\"3\"\n            width=\"94\" height=\"94\"\n            fill=\"red\"\n            fill-opacity=\"0.65\"\n            stroke=\"red\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "mdt-priority-marker",
+});
+        
+    
+        var popup_3f6936ac87cb4e1600124bd9c3c0df7c = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_631485639cb9d560995793d534ea1dd4 = $(`<div id="html_631485639cb9d560995793d534ea1dd4" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> MDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> High<br>         <b>Rank:</b> 3<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 43.338786<br>         <b>Longitude:</b> -86.244265     </div>     </div>`)[0];
+                popup_3f6936ac87cb4e1600124bd9c3c0df7c.setContent(html_631485639cb9d560995793d534ea1dd4);
+            
+        
+
+        marker_31a11a2f79c8d829ebcf595c6a442878.bindPopup(popup_3f6936ac87cb4e1600124bd9c3c0df7c)
+        ;
+
+        
+    
+    
+            marker_31a11a2f79c8d829ebcf595c6a442878.bindTooltip(
+                `<div>
+                     MDT | 1% Market Share<br>Priority: High<br>Rank: 3<br>Required chargers: 2<br>Latitude: 43.338786<br>Longitude: -86.244265
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_31a11a2f79c8d829ebcf595c6a442878.setIcon(div_icon_90c3c8f24494a6ac52be4b25758d23dd);
+            
+    
+            var marker_954e74b35a27859b466b74b293517acb = L.marker(
+                [43.887497, -85.528149],
+                {
+}
+            ).addTo(feature_group_65964524600b5bc787cc3acdb3acaf02);
+        
+    
+            var div_icon_0f4b43e65fbe2dc9cd8261eb8c04a728 = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003crect\n            x=\"3\" y=\"3\"\n            width=\"94\" height=\"94\"\n            fill=\"red\"\n            fill-opacity=\"0.65\"\n            stroke=\"red\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "mdt-priority-marker",
+});
+        
+    
+        var popup_df7e779bdd29f1981445f673d625e5c2 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_2894666b274b76c0d84d7c1dc8ddb683 = $(`<div id="html_2894666b274b76c0d84d7c1dc8ddb683" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> MDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> High<br>         <b>Rank:</b> 4<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 43.887497<br>         <b>Longitude:</b> -85.528149     </div>     </div>`)[0];
+                popup_df7e779bdd29f1981445f673d625e5c2.setContent(html_2894666b274b76c0d84d7c1dc8ddb683);
+            
+        
+
+        marker_954e74b35a27859b466b74b293517acb.bindPopup(popup_df7e779bdd29f1981445f673d625e5c2)
+        ;
+
+        
+    
+    
+            marker_954e74b35a27859b466b74b293517acb.bindTooltip(
+                `<div>
+                     MDT | 1% Market Share<br>Priority: High<br>Rank: 4<br>Required chargers: 2<br>Latitude: 43.887497<br>Longitude: -85.528149
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_954e74b35a27859b466b74b293517acb.setIcon(div_icon_0f4b43e65fbe2dc9cd8261eb8c04a728);
+            
+    
+            var marker_3e1f0d6eb7b9da4eb5eb9602d7d3493f = L.marker(
+                [42.879412, -85.075158],
+                {
+}
+            ).addTo(feature_group_65964524600b5bc787cc3acdb3acaf02);
+        
+    
+            var div_icon_9d0b5bd28c3b7a27822fe1f298001404 = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003crect\n            x=\"3\" y=\"3\"\n            width=\"94\" height=\"94\"\n            fill=\"red\"\n            fill-opacity=\"0.65\"\n            stroke=\"red\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "mdt-priority-marker",
+});
+        
+    
+        var popup_e238df4640eb2eb8a98aea3c799939c9 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_3e4e1b44c17e64e8f31d3efbbd3b0d30 = $(`<div id="html_3e4e1b44c17e64e8f31d3efbbd3b0d30" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> MDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> High<br>         <b>Rank:</b> 5<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 42.879412<br>         <b>Longitude:</b> -85.075158     </div>     </div>`)[0];
+                popup_e238df4640eb2eb8a98aea3c799939c9.setContent(html_3e4e1b44c17e64e8f31d3efbbd3b0d30);
+            
+        
+
+        marker_3e1f0d6eb7b9da4eb5eb9602d7d3493f.bindPopup(popup_e238df4640eb2eb8a98aea3c799939c9)
+        ;
+
+        
+    
+    
+            marker_3e1f0d6eb7b9da4eb5eb9602d7d3493f.bindTooltip(
+                `<div>
+                     MDT | 1% Market Share<br>Priority: High<br>Rank: 5<br>Required chargers: 2<br>Latitude: 42.879412<br>Longitude: -85.075158
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_3e1f0d6eb7b9da4eb5eb9602d7d3493f.setIcon(div_icon_9d0b5bd28c3b7a27822fe1f298001404);
+            
+    
+            var marker_b60d05ea10ca4c1d5e10dcb0580a6680 = L.marker(
+                [42.237977, -85.637953],
+                {
+}
+            ).addTo(feature_group_65964524600b5bc787cc3acdb3acaf02);
+        
+    
+            var div_icon_7df4f9efe6e40e09a55580a385a7eea1 = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003crect\n            x=\"3\" y=\"3\"\n            width=\"94\" height=\"94\"\n            fill=\"red\"\n            fill-opacity=\"0.65\"\n            stroke=\"red\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "mdt-priority-marker",
+});
+        
+    
+        var popup_545078b7817275d57aa80c51a486e202 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_fbc8fc4e9c41cd6e0bde8acff5d1010f = $(`<div id="html_fbc8fc4e9c41cd6e0bde8acff5d1010f" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> MDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> High<br>         <b>Rank:</b> 6<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 42.237977<br>         <b>Longitude:</b> -85.637953     </div>     </div>`)[0];
+                popup_545078b7817275d57aa80c51a486e202.setContent(html_fbc8fc4e9c41cd6e0bde8acff5d1010f);
+            
+        
+
+        marker_b60d05ea10ca4c1d5e10dcb0580a6680.bindPopup(popup_545078b7817275d57aa80c51a486e202)
+        ;
+
+        
+    
+    
+            marker_b60d05ea10ca4c1d5e10dcb0580a6680.bindTooltip(
+                `<div>
+                     MDT | 1% Market Share<br>Priority: High<br>Rank: 6<br>Required chargers: 2<br>Latitude: 42.237977<br>Longitude: -85.637953
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_b60d05ea10ca4c1d5e10dcb0580a6680.setIcon(div_icon_7df4f9efe6e40e09a55580a385a7eea1);
+            
+    
+            var marker_2316859b1cb698d0b516bb9b523e34d3 = L.marker(
+                [44.716742, -85.18996],
+                {
+}
+            ).addTo(feature_group_65964524600b5bc787cc3acdb3acaf02);
+        
+    
+            var div_icon_45e474aa64852c309c4635ba37525951 = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003crect\n            x=\"3\" y=\"3\"\n            width=\"94\" height=\"94\"\n            fill=\"red\"\n            fill-opacity=\"0.65\"\n            stroke=\"red\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "mdt-priority-marker",
+});
+        
+    
+        var popup_2f40a8578090ce920071c295f467bdb5 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_2d45e292cdbd6591070a0330dbadf1ee = $(`<div id="html_2d45e292cdbd6591070a0330dbadf1ee" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> MDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> High<br>         <b>Rank:</b> 7<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 44.716742<br>         <b>Longitude:</b> -85.189960     </div>     </div>`)[0];
+                popup_2f40a8578090ce920071c295f467bdb5.setContent(html_2d45e292cdbd6591070a0330dbadf1ee);
+            
+        
+
+        marker_2316859b1cb698d0b516bb9b523e34d3.bindPopup(popup_2f40a8578090ce920071c295f467bdb5)
+        ;
+
+        
+    
+    
+            marker_2316859b1cb698d0b516bb9b523e34d3.bindTooltip(
+                `<div>
+                     MDT | 1% Market Share<br>Priority: High<br>Rank: 7<br>Required chargers: 2<br>Latitude: 44.716742<br>Longitude: -85.189960
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_2316859b1cb698d0b516bb9b523e34d3.setIcon(div_icon_45e474aa64852c309c4635ba37525951);
+            
+    
+            var marker_9de578f4a2df68c20d360f5307ad6baf = L.marker(
+                [43.407943, -84.66132],
+                {
+}
+            ).addTo(feature_group_65964524600b5bc787cc3acdb3acaf02);
+        
+    
+            var div_icon_1cf1a5949fd75bf353a63de0241c9f93 = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003crect\n            x=\"3\" y=\"3\"\n            width=\"94\" height=\"94\"\n            fill=\"red\"\n            fill-opacity=\"0.65\"\n            stroke=\"red\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "mdt-priority-marker",
+});
+        
+    
+        var popup_d7adf3a17425d3e8a0ce9d15db71cea3 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_e92fa6db0a4511bf8c189661e1cae842 = $(`<div id="html_e92fa6db0a4511bf8c189661e1cae842" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> MDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> High<br>         <b>Rank:</b> 8<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 43.407943<br>         <b>Longitude:</b> -84.661320     </div>     </div>`)[0];
+                popup_d7adf3a17425d3e8a0ce9d15db71cea3.setContent(html_e92fa6db0a4511bf8c189661e1cae842);
+            
+        
+
+        marker_9de578f4a2df68c20d360f5307ad6baf.bindPopup(popup_d7adf3a17425d3e8a0ce9d15db71cea3)
+        ;
+
+        
+    
+    
+            marker_9de578f4a2df68c20d360f5307ad6baf.bindTooltip(
+                `<div>
+                     MDT | 1% Market Share<br>Priority: High<br>Rank: 8<br>Required chargers: 2<br>Latitude: 43.407943<br>Longitude: -84.661320
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_9de578f4a2df68c20d360f5307ad6baf.setIcon(div_icon_1cf1a5949fd75bf353a63de0241c9f93);
+            
+    
+            var marker_ce06154d3b35b90ad6ad62912e57a951 = L.marker(
+                [43.659042, -84.318297],
+                {
+}
+            ).addTo(feature_group_65964524600b5bc787cc3acdb3acaf02);
+        
+    
+            var div_icon_1fe3aef141ee50b9cd0526c03ded926a = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003crect\n            x=\"3\" y=\"3\"\n            width=\"94\" height=\"94\"\n            fill=\"red\"\n            fill-opacity=\"0.65\"\n            stroke=\"red\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "mdt-priority-marker",
+});
+        
+    
+        var popup_5db7f8e8b46bf51dfc92f3650e175800 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_e46a7f07f7adaeeb96dff4c4cf374604 = $(`<div id="html_e46a7f07f7adaeeb96dff4c4cf374604" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> MDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> High<br>         <b>Rank:</b> 9<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 43.659042<br>         <b>Longitude:</b> -84.318297     </div>     </div>`)[0];
+                popup_5db7f8e8b46bf51dfc92f3650e175800.setContent(html_e46a7f07f7adaeeb96dff4c4cf374604);
+            
+        
+
+        marker_ce06154d3b35b90ad6ad62912e57a951.bindPopup(popup_5db7f8e8b46bf51dfc92f3650e175800)
+        ;
+
+        
+    
+    
+            marker_ce06154d3b35b90ad6ad62912e57a951.bindTooltip(
+                `<div>
+                     MDT | 1% Market Share<br>Priority: High<br>Rank: 9<br>Required chargers: 2<br>Latitude: 43.659042<br>Longitude: -84.318297
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_ce06154d3b35b90ad6ad62912e57a951.setIcon(div_icon_1fe3aef141ee50b9cd0526c03ded926a);
+            
+    
+            var marker_14f8b408e74005cae16d6153ade8227e = L.marker(
+                [44.107737, -83.568088],
+                {
+}
+            ).addTo(feature_group_65964524600b5bc787cc3acdb3acaf02);
+        
+    
+            var div_icon_6727d0a9116067e8ce29008c6feb41d6 = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003crect\n            x=\"3\" y=\"3\"\n            width=\"94\" height=\"94\"\n            fill=\"red\"\n            fill-opacity=\"0.65\"\n            stroke=\"red\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "mdt-priority-marker",
+});
+        
+    
+        var popup_3bef3ab4a48fe55063db7934acc391c5 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_be9abd69d7eb46603b9298c9e7626483 = $(`<div id="html_be9abd69d7eb46603b9298c9e7626483" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> MDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> High<br>         <b>Rank:</b> 10<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 44.107737<br>         <b>Longitude:</b> -83.568088     </div>     </div>`)[0];
+                popup_3bef3ab4a48fe55063db7934acc391c5.setContent(html_be9abd69d7eb46603b9298c9e7626483);
+            
+        
+
+        marker_14f8b408e74005cae16d6153ade8227e.bindPopup(popup_3bef3ab4a48fe55063db7934acc391c5)
+        ;
+
+        
+    
+    
+            marker_14f8b408e74005cae16d6153ade8227e.bindTooltip(
+                `<div>
+                     MDT | 1% Market Share<br>Priority: High<br>Rank: 10<br>Required chargers: 2<br>Latitude: 44.107737<br>Longitude: -83.568088
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_14f8b408e74005cae16d6153ade8227e.setIcon(div_icon_6727d0a9116067e8ce29008c6feb41d6);
+            
+    
+            var marker_b398b8376b5432885b6e78508549d3a2 = L.marker(
+                [44.589461, -83.316874],
+                {
+}
+            ).addTo(feature_group_65964524600b5bc787cc3acdb3acaf02);
+        
+    
+            var div_icon_559d63c777c098fdc41057dfc16708e5 = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003crect\n            x=\"3\" y=\"3\"\n            width=\"94\" height=\"94\"\n            fill=\"green\"\n            fill-opacity=\"0.65\"\n            stroke=\"green\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "mdt-priority-marker",
+});
+        
+    
+        var popup_5d42d57a587bbd06c067ad884e74f20f = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_566b3389e9e3752fa9c6c7abb5ee5155 = $(`<div id="html_566b3389e9e3752fa9c6c7abb5ee5155" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> MDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> Medium<br>         <b>Rank:</b> 11<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 44.589461<br>         <b>Longitude:</b> -83.316874     </div>     </div>`)[0];
+                popup_5d42d57a587bbd06c067ad884e74f20f.setContent(html_566b3389e9e3752fa9c6c7abb5ee5155);
+            
+        
+
+        marker_b398b8376b5432885b6e78508549d3a2.bindPopup(popup_5d42d57a587bbd06c067ad884e74f20f)
+        ;
+
+        
+    
+    
+            marker_b398b8376b5432885b6e78508549d3a2.bindTooltip(
+                `<div>
+                     MDT | 1% Market Share<br>Priority: Medium<br>Rank: 11<br>Required chargers: 2<br>Latitude: 44.589461<br>Longitude: -83.316874
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_b398b8376b5432885b6e78508549d3a2.setIcon(div_icon_559d63c777c098fdc41057dfc16708e5);
+            
+    
+            var marker_0dda34ec9d034ee4e74dbca90b372f0e = L.marker(
+                [45.370149, -84.970842],
+                {
+}
+            ).addTo(feature_group_65964524600b5bc787cc3acdb3acaf02);
+        
+    
+            var div_icon_1289f58060b06279986a3dac7721108a = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003crect\n            x=\"3\" y=\"3\"\n            width=\"94\" height=\"94\"\n            fill=\"green\"\n            fill-opacity=\"0.65\"\n            stroke=\"green\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "mdt-priority-marker",
+});
+        
+    
+        var popup_a38643fd06bbb56e8410c9e14264885b = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_b671aa5618fd0fce5c40e8b9cf072c97 = $(`<div id="html_b671aa5618fd0fce5c40e8b9cf072c97" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> MDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> Medium<br>         <b>Rank:</b> 12<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 45.370149<br>         <b>Longitude:</b> -84.970842     </div>     </div>`)[0];
+                popup_a38643fd06bbb56e8410c9e14264885b.setContent(html_b671aa5618fd0fce5c40e8b9cf072c97);
+            
+        
+
+        marker_0dda34ec9d034ee4e74dbca90b372f0e.bindPopup(popup_a38643fd06bbb56e8410c9e14264885b)
+        ;
+
+        
+    
+    
+            marker_0dda34ec9d034ee4e74dbca90b372f0e.bindTooltip(
+                `<div>
+                     MDT | 1% Market Share<br>Priority: Medium<br>Rank: 12<br>Required chargers: 2<br>Latitude: 45.370149<br>Longitude: -84.970842
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_0dda34ec9d034ee4e74dbca90b372f0e.setIcon(div_icon_1289f58060b06279986a3dac7721108a);
+            
+    
+            var marker_f29d5d2cc84d59e7969568732f9b1199 = L.marker(
+                [42.984824, -83.733504],
+                {
+}
+            ).addTo(feature_group_65964524600b5bc787cc3acdb3acaf02);
+        
+    
+            var div_icon_4070d3cd2342a966d37563b20cb9f063 = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003crect\n            x=\"3\" y=\"3\"\n            width=\"94\" height=\"94\"\n            fill=\"green\"\n            fill-opacity=\"0.65\"\n            stroke=\"green\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "mdt-priority-marker",
+});
+        
+    
+        var popup_94fe8bc45ba5b78269583222bbdfee9c = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_6dfaef327335d1ad340276b40751d36e = $(`<div id="html_6dfaef327335d1ad340276b40751d36e" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> MDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> Medium<br>         <b>Rank:</b> 13<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 42.984824<br>         <b>Longitude:</b> -83.733504     </div>     </div>`)[0];
+                popup_94fe8bc45ba5b78269583222bbdfee9c.setContent(html_6dfaef327335d1ad340276b40751d36e);
+            
+        
+
+        marker_f29d5d2cc84d59e7969568732f9b1199.bindPopup(popup_94fe8bc45ba5b78269583222bbdfee9c)
+        ;
+
+        
+    
+    
+            marker_f29d5d2cc84d59e7969568732f9b1199.bindTooltip(
+                `<div>
+                     MDT | 1% Market Share<br>Priority: Medium<br>Rank: 13<br>Required chargers: 2<br>Latitude: 42.984824<br>Longitude: -83.733504
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_f29d5d2cc84d59e7969568732f9b1199.setIcon(div_icon_4070d3cd2342a966d37563b20cb9f063);
+            
+    
+            var marker_bdcd9b47e130414e70aa97ddc9880563 = L.marker(
+                [44.997465, -84.029749],
+                {
+}
+            ).addTo(feature_group_65964524600b5bc787cc3acdb3acaf02);
+        
+    
+            var div_icon_252886abb5cc4d3d709d5c4922827c9b = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003crect\n            x=\"3\" y=\"3\"\n            width=\"94\" height=\"94\"\n            fill=\"green\"\n            fill-opacity=\"0.65\"\n            stroke=\"green\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "mdt-priority-marker",
+});
+        
+    
+        var popup_9620e52188b35dff13e93b4952e0cbb3 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_11fc31a67260326b9a64653ff3cbbd47 = $(`<div id="html_11fc31a67260326b9a64653ff3cbbd47" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> MDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> Medium<br>         <b>Rank:</b> 14<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 44.997465<br>         <b>Longitude:</b> -84.029749     </div>     </div>`)[0];
+                popup_9620e52188b35dff13e93b4952e0cbb3.setContent(html_11fc31a67260326b9a64653ff3cbbd47);
+            
+        
+
+        marker_bdcd9b47e130414e70aa97ddc9880563.bindPopup(popup_9620e52188b35dff13e93b4952e0cbb3)
+        ;
+
+        
+    
+    
+            marker_bdcd9b47e130414e70aa97ddc9880563.bindTooltip(
+                `<div>
+                     MDT | 1% Market Share<br>Priority: Medium<br>Rank: 14<br>Required chargers: 2<br>Latitude: 44.997465<br>Longitude: -84.029749
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_bdcd9b47e130414e70aa97ddc9880563.setIcon(div_icon_252886abb5cc4d3d709d5c4922827c9b);
+            
+    
+            var marker_10431dc975545e2ed40389e24c0aea74 = L.marker(
+                [44.250248, -84.804041],
+                {
+}
+            ).addTo(feature_group_65964524600b5bc787cc3acdb3acaf02);
+        
+    
+            var div_icon_f13403ab22af746d33d2eec54633185e = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003crect\n            x=\"3\" y=\"3\"\n            width=\"94\" height=\"94\"\n            fill=\"green\"\n            fill-opacity=\"0.65\"\n            stroke=\"green\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "mdt-priority-marker",
+});
+        
+    
+        var popup_6951532b8078a72abcd5274963855d8a = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_f78134386b6a630915bf56eb467e470b = $(`<div id="html_f78134386b6a630915bf56eb467e470b" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> MDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> Medium<br>         <b>Rank:</b> 15<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 44.250248<br>         <b>Longitude:</b> -84.804041     </div>     </div>`)[0];
+                popup_6951532b8078a72abcd5274963855d8a.setContent(html_f78134386b6a630915bf56eb467e470b);
+            
+        
+
+        marker_10431dc975545e2ed40389e24c0aea74.bindPopup(popup_6951532b8078a72abcd5274963855d8a)
+        ;
+
+        
+    
+    
+            marker_10431dc975545e2ed40389e24c0aea74.bindTooltip(
+                `<div>
+                     MDT | 1% Market Share<br>Priority: Medium<br>Rank: 15<br>Required chargers: 2<br>Latitude: 44.250248<br>Longitude: -84.804041
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_10431dc975545e2ed40389e24c0aea74.setIcon(div_icon_f13403ab22af746d33d2eec54633185e);
+            
+    
+            var marker_eecf20f2f9e01c27758b4478ac7885fd = L.marker(
+                [44.656485, -84.700364],
+                {
+}
+            ).addTo(feature_group_65964524600b5bc787cc3acdb3acaf02);
+        
+    
+            var div_icon_b774ce7c6ac81845ba8e22241d405611 = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003crect\n            x=\"3\" y=\"3\"\n            width=\"94\" height=\"94\"\n            fill=\"green\"\n            fill-opacity=\"0.65\"\n            stroke=\"green\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "mdt-priority-marker",
+});
+        
+    
+        var popup_1baea2bde6837318a0ce6adc751060df = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_dff17a0d5edd3ff9dfeee390610b47c0 = $(`<div id="html_dff17a0d5edd3ff9dfeee390610b47c0" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> MDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> Medium<br>         <b>Rank:</b> 16<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 44.656485<br>         <b>Longitude:</b> -84.700364     </div>     </div>`)[0];
+                popup_1baea2bde6837318a0ce6adc751060df.setContent(html_dff17a0d5edd3ff9dfeee390610b47c0);
+            
+        
+
+        marker_eecf20f2f9e01c27758b4478ac7885fd.bindPopup(popup_1baea2bde6837318a0ce6adc751060df)
+        ;
+
+        
+    
+    
+            marker_eecf20f2f9e01c27758b4478ac7885fd.bindTooltip(
+                `<div>
+                     MDT | 1% Market Share<br>Priority: Medium<br>Rank: 16<br>Required chargers: 2<br>Latitude: 44.656485<br>Longitude: -84.700364
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_eecf20f2f9e01c27758b4478ac7885fd.setIcon(div_icon_b774ce7c6ac81845ba8e22241d405611);
+            
+    
+            var marker_7964bd0ec2dd01dff638c92c7f6a311d = L.marker(
+                [43.828597, -84.748942],
+                {
+}
+            ).addTo(feature_group_65964524600b5bc787cc3acdb3acaf02);
+        
+    
+            var div_icon_7faa057cfe629d212b7e50cab6983a24 = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003crect\n            x=\"3\" y=\"3\"\n            width=\"94\" height=\"94\"\n            fill=\"green\"\n            fill-opacity=\"0.65\"\n            stroke=\"green\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "mdt-priority-marker",
+});
+        
+    
+        var popup_7efba5ca8f81b742514223576f2a7f3b = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_6b33eb2e8390cbc25df8b0895ff43bab = $(`<div id="html_6b33eb2e8390cbc25df8b0895ff43bab" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> MDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> Medium<br>         <b>Rank:</b> 17<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 43.828597<br>         <b>Longitude:</b> -84.748942     </div>     </div>`)[0];
+                popup_7efba5ca8f81b742514223576f2a7f3b.setContent(html_6b33eb2e8390cbc25df8b0895ff43bab);
+            
+        
+
+        marker_7964bd0ec2dd01dff638c92c7f6a311d.bindPopup(popup_7efba5ca8f81b742514223576f2a7f3b)
+        ;
+
+        
+    
+    
+            marker_7964bd0ec2dd01dff638c92c7f6a311d.bindTooltip(
+                `<div>
+                     MDT | 1% Market Share<br>Priority: Medium<br>Rank: 17<br>Required chargers: 2<br>Latitude: 43.828597<br>Longitude: -84.748942
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_7964bd0ec2dd01dff638c92c7f6a311d.setIcon(div_icon_7faa057cfe629d212b7e50cab6983a24);
+            
+    
+            var marker_203e5e65d17dced140dc9bb490e6a48a = L.marker(
+                [42.973046, -85.677587],
+                {
+}
+            ).addTo(feature_group_65964524600b5bc787cc3acdb3acaf02);
+        
+    
+            var div_icon_403377db904ed807013a8c5babb22c3a = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003crect\n            x=\"3\" y=\"3\"\n            width=\"94\" height=\"94\"\n            fill=\"green\"\n            fill-opacity=\"0.65\"\n            stroke=\"green\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "mdt-priority-marker",
+});
+        
+    
+        var popup_90e0067887a4fc3799a8ee78e51914b8 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_e86ffd22d7af613c01e7c5bcb173e106 = $(`<div id="html_e86ffd22d7af613c01e7c5bcb173e106" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> MDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> Medium<br>         <b>Rank:</b> 18<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 42.973046<br>         <b>Longitude:</b> -85.677587     </div>     </div>`)[0];
+                popup_90e0067887a4fc3799a8ee78e51914b8.setContent(html_e86ffd22d7af613c01e7c5bcb173e106);
+            
+        
+
+        marker_203e5e65d17dced140dc9bb490e6a48a.bindPopup(popup_90e0067887a4fc3799a8ee78e51914b8)
+        ;
+
+        
+    
+    
+            marker_203e5e65d17dced140dc9bb490e6a48a.bindTooltip(
+                `<div>
+                     MDT | 1% Market Share<br>Priority: Medium<br>Rank: 18<br>Required chargers: 2<br>Latitude: 42.973046<br>Longitude: -85.677587
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_203e5e65d17dced140dc9bb490e6a48a.setIcon(div_icon_403377db904ed807013a8c5babb22c3a);
+            
+    
+            var marker_44a096a1e418f10c7cad0c96b5528519 = L.marker(
+                [44.430458, -86.128876],
+                {
+}
+            ).addTo(feature_group_65964524600b5bc787cc3acdb3acaf02);
+        
+    
+            var div_icon_f0ff709370cfd399bf10f0c23ea57ff9 = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003crect\n            x=\"3\" y=\"3\"\n            width=\"94\" height=\"94\"\n            fill=\"green\"\n            fill-opacity=\"0.65\"\n            stroke=\"green\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "mdt-priority-marker",
+});
+        
+    
+        var popup_65a36ead13203ea911dcda0da14cd021 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_c22afd430f4d644011848bb9cdac3fcc = $(`<div id="html_c22afd430f4d644011848bb9cdac3fcc" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> MDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> Medium<br>         <b>Rank:</b> 19<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 44.430458<br>         <b>Longitude:</b> -86.128876     </div>     </div>`)[0];
+                popup_65a36ead13203ea911dcda0da14cd021.setContent(html_c22afd430f4d644011848bb9cdac3fcc);
+            
+        
+
+        marker_44a096a1e418f10c7cad0c96b5528519.bindPopup(popup_65a36ead13203ea911dcda0da14cd021)
+        ;
+
+        
+    
+    
+            marker_44a096a1e418f10c7cad0c96b5528519.bindTooltip(
+                `<div>
+                     MDT | 1% Market Share<br>Priority: Medium<br>Rank: 19<br>Required chargers: 2<br>Latitude: 44.430458<br>Longitude: -86.128876
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_44a096a1e418f10c7cad0c96b5528519.setIcon(div_icon_f0ff709370cfd399bf10f0c23ea57ff9);
+            
+    
+            var marker_9f4ef7fd818eac24f8a37cfa4532efd7 = L.marker(
+                [46.22643, -87.059636],
+                {
+}
+            ).addTo(feature_group_65964524600b5bc787cc3acdb3acaf02);
+        
+    
+            var div_icon_26dba79a64e3f41b9fec4f915a47f3b4 = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003crect\n            x=\"3\" y=\"3\"\n            width=\"94\" height=\"94\"\n            fill=\"green\"\n            fill-opacity=\"0.65\"\n            stroke=\"green\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "mdt-priority-marker",
+});
+        
+    
+        var popup_fa8cb4748e46cb2d35686bf9259f5458 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_fba83d231d162edd1d21f4ce9e96359a = $(`<div id="html_fba83d231d162edd1d21f4ce9e96359a" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> MDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> Medium<br>         <b>Rank:</b> 20<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 46.226430<br>         <b>Longitude:</b> -87.059636     </div>     </div>`)[0];
+                popup_fa8cb4748e46cb2d35686bf9259f5458.setContent(html_fba83d231d162edd1d21f4ce9e96359a);
+            
+        
+
+        marker_9f4ef7fd818eac24f8a37cfa4532efd7.bindPopup(popup_fa8cb4748e46cb2d35686bf9259f5458)
+        ;
+
+        
+    
+    
+            marker_9f4ef7fd818eac24f8a37cfa4532efd7.bindTooltip(
+                `<div>
+                     MDT | 1% Market Share<br>Priority: Medium<br>Rank: 20<br>Required chargers: 2<br>Latitude: 46.226430<br>Longitude: -87.059636
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_9f4ef7fd818eac24f8a37cfa4532efd7.setIcon(div_icon_26dba79a64e3f41b9fec4f915a47f3b4);
+            
+    
+            var marker_64996f2bf10ac375502b9477e0f09b4d = L.marker(
+                [42.72425, -84.509962],
+                {
+}
+            ).addTo(feature_group_65964524600b5bc787cc3acdb3acaf02);
+        
+    
+            var div_icon_75d4e6cc2d032446ce12b59c34a6e958 = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003crect\n            x=\"3\" y=\"3\"\n            width=\"94\" height=\"94\"\n            fill=\"blue\"\n            fill-opacity=\"0.65\"\n            stroke=\"blue\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "mdt-priority-marker",
+});
+        
+    
+        var popup_be6f2cc95d128b5c459f0e31a9ca3bac = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_335d06b97ba3921fd22750296156fd31 = $(`<div id="html_335d06b97ba3921fd22750296156fd31" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> MDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> Low<br>         <b>Rank:</b> 21<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 42.724250<br>         <b>Longitude:</b> -84.509962     </div>     </div>`)[0];
+                popup_be6f2cc95d128b5c459f0e31a9ca3bac.setContent(html_335d06b97ba3921fd22750296156fd31);
+            
+        
+
+        marker_64996f2bf10ac375502b9477e0f09b4d.bindPopup(popup_be6f2cc95d128b5c459f0e31a9ca3bac)
+        ;
+
+        
+    
+    
+            marker_64996f2bf10ac375502b9477e0f09b4d.bindTooltip(
+                `<div>
+                     MDT | 1% Market Share<br>Priority: Low<br>Rank: 21<br>Required chargers: 2<br>Latitude: 42.724250<br>Longitude: -84.509962
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_64996f2bf10ac375502b9477e0f09b4d.setIcon(div_icon_75d4e6cc2d032446ce12b59c34a6e958);
+            
+    
+            var marker_c61d4d78131957d653d80868c2f689f4 = L.marker(
+                [42.225771, -83.685685],
+                {
+}
+            ).addTo(feature_group_65964524600b5bc787cc3acdb3acaf02);
+        
+    
+            var div_icon_274d5bd77861a3aaee6ea296a131652a = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003crect\n            x=\"3\" y=\"3\"\n            width=\"94\" height=\"94\"\n            fill=\"blue\"\n            fill-opacity=\"0.65\"\n            stroke=\"blue\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "mdt-priority-marker",
+});
+        
+    
+        var popup_2754866969b77b2d0eafd8a49518db9e = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_ad224cd3d22c28588dee20d5176960d5 = $(`<div id="html_ad224cd3d22c28588dee20d5176960d5" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> MDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> Low<br>         <b>Rank:</b> 22<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 42.225771<br>         <b>Longitude:</b> -83.685685     </div>     </div>`)[0];
+                popup_2754866969b77b2d0eafd8a49518db9e.setContent(html_ad224cd3d22c28588dee20d5176960d5);
+            
+        
+
+        marker_c61d4d78131957d653d80868c2f689f4.bindPopup(popup_2754866969b77b2d0eafd8a49518db9e)
+        ;
+
+        
+    
+    
+            marker_c61d4d78131957d653d80868c2f689f4.bindTooltip(
+                `<div>
+                     MDT | 1% Market Share<br>Priority: Low<br>Rank: 22<br>Required chargers: 2<br>Latitude: 42.225771<br>Longitude: -83.685685
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_c61d4d78131957d653d80868c2f689f4.setIcon(div_icon_274d5bd77861a3aaee6ea296a131652a);
+            
+    
+            var marker_43e337e91c99d09d3408f040faf1b1b5 = L.marker(
+                [45.952916, -86.244862],
+                {
+}
+            ).addTo(feature_group_65964524600b5bc787cc3acdb3acaf02);
+        
+    
+            var div_icon_9e1d40f5b612313ff070c0f7e79c1c2b = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003crect\n            x=\"3\" y=\"3\"\n            width=\"94\" height=\"94\"\n            fill=\"blue\"\n            fill-opacity=\"0.65\"\n            stroke=\"blue\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "mdt-priority-marker",
+});
+        
+    
+        var popup_6b0c3aa2e3c8a9bb9133e62979af4bdb = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_ad532761899ec536dc5ad7c85e748be5 = $(`<div id="html_ad532761899ec536dc5ad7c85e748be5" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> MDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> Low<br>         <b>Rank:</b> 23<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 45.952916<br>         <b>Longitude:</b> -86.244862     </div>     </div>`)[0];
+                popup_6b0c3aa2e3c8a9bb9133e62979af4bdb.setContent(html_ad532761899ec536dc5ad7c85e748be5);
+            
+        
+
+        marker_43e337e91c99d09d3408f040faf1b1b5.bindPopup(popup_6b0c3aa2e3c8a9bb9133e62979af4bdb)
+        ;
+
+        
+    
+    
+            marker_43e337e91c99d09d3408f040faf1b1b5.bindTooltip(
+                `<div>
+                     MDT | 1% Market Share<br>Priority: Low<br>Rank: 23<br>Required chargers: 2<br>Latitude: 45.952916<br>Longitude: -86.244862
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_43e337e91c99d09d3408f040faf1b1b5.setIcon(div_icon_9e1d40f5b612313ff070c0f7e79c1c2b);
+            
+    
+            var marker_c3d1a2ea825858304a4a8fe84c863211 = L.marker(
+                [46.093975, -85.339534],
+                {
+}
+            ).addTo(feature_group_65964524600b5bc787cc3acdb3acaf02);
+        
+    
+            var div_icon_dff38e64d404e0cfbe7de24f32cb3dff = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003crect\n            x=\"3\" y=\"3\"\n            width=\"94\" height=\"94\"\n            fill=\"blue\"\n            fill-opacity=\"0.65\"\n            stroke=\"blue\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "mdt-priority-marker",
+});
+        
+    
+        var popup_755f0fab181ac85a013ebabf0b1fdae4 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_771175d9651f13776a1c4ff7d58bea25 = $(`<div id="html_771175d9651f13776a1c4ff7d58bea25" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> MDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> Low<br>         <b>Rank:</b> 24<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 46.093975<br>         <b>Longitude:</b> -85.339534     </div>     </div>`)[0];
+                popup_755f0fab181ac85a013ebabf0b1fdae4.setContent(html_771175d9651f13776a1c4ff7d58bea25);
+            
+        
+
+        marker_c3d1a2ea825858304a4a8fe84c863211.bindPopup(popup_755f0fab181ac85a013ebabf0b1fdae4)
+        ;
+
+        
+    
+    
+            marker_c3d1a2ea825858304a4a8fe84c863211.bindTooltip(
+                `<div>
+                     MDT | 1% Market Share<br>Priority: Low<br>Rank: 24<br>Required chargers: 2<br>Latitude: 46.093975<br>Longitude: -85.339534
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_c3d1a2ea825858304a4a8fe84c863211.setIcon(div_icon_dff38e64d404e0cfbe7de24f32cb3dff);
+            
+    
+            var marker_104b0ac8fa576045709825c8e0aea24a = L.marker(
+                [46.537494, -87.395252],
+                {
+}
+            ).addTo(feature_group_65964524600b5bc787cc3acdb3acaf02);
+        
+    
+            var div_icon_72b8a45aba74a1fd76d459412a29aa66 = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003crect\n            x=\"3\" y=\"3\"\n            width=\"94\" height=\"94\"\n            fill=\"blue\"\n            fill-opacity=\"0.65\"\n            stroke=\"blue\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "mdt-priority-marker",
+});
+        
+    
+        var popup_40cd05aa0198cd44d82b46956924de10 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_bfbe8945a3b53e06212b0ce4b25d0822 = $(`<div id="html_bfbe8945a3b53e06212b0ce4b25d0822" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> MDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> Low<br>         <b>Rank:</b> 25<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 46.537494<br>         <b>Longitude:</b> -87.395252     </div>     </div>`)[0];
+                popup_40cd05aa0198cd44d82b46956924de10.setContent(html_bfbe8945a3b53e06212b0ce4b25d0822);
+            
+        
+
+        marker_104b0ac8fa576045709825c8e0aea24a.bindPopup(popup_40cd05aa0198cd44d82b46956924de10)
+        ;
+
+        
+    
+    
+            marker_104b0ac8fa576045709825c8e0aea24a.bindTooltip(
+                `<div>
+                     MDT | 1% Market Share<br>Priority: Low<br>Rank: 25<br>Required chargers: 2<br>Latitude: 46.537494<br>Longitude: -87.395252
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_104b0ac8fa576045709825c8e0aea24a.setIcon(div_icon_72b8a45aba74a1fd76d459412a29aa66);
+            
+    
+            var marker_41cf82bc66fcdf8fc965828f3a1f344b = L.marker(
+                [46.097721, -88.347779],
+                {
+}
+            ).addTo(feature_group_65964524600b5bc787cc3acdb3acaf02);
+        
+    
+            var div_icon_696a4cbd9f287633e199ec7d72a1f85c = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003crect\n            x=\"3\" y=\"3\"\n            width=\"94\" height=\"94\"\n            fill=\"blue\"\n            fill-opacity=\"0.65\"\n            stroke=\"blue\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "mdt-priority-marker",
+});
+        
+    
+        var popup_19fd35b8ed115373b28644bec5d919f8 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_1f4e94beea466e76dd1e038ee686f18f = $(`<div id="html_1f4e94beea466e76dd1e038ee686f18f" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> MDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> Low<br>         <b>Rank:</b> 26<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 46.097721<br>         <b>Longitude:</b> -88.347779     </div>     </div>`)[0];
+                popup_19fd35b8ed115373b28644bec5d919f8.setContent(html_1f4e94beea466e76dd1e038ee686f18f);
+            
+        
+
+        marker_41cf82bc66fcdf8fc965828f3a1f344b.bindPopup(popup_19fd35b8ed115373b28644bec5d919f8)
+        ;
+
+        
+    
+    
+            marker_41cf82bc66fcdf8fc965828f3a1f344b.bindTooltip(
+                `<div>
+                     MDT | 1% Market Share<br>Priority: Low<br>Rank: 26<br>Required chargers: 2<br>Latitude: 46.097721<br>Longitude: -88.347779
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_41cf82bc66fcdf8fc965828f3a1f344b.setIcon(div_icon_696a4cbd9f287633e199ec7d72a1f85c);
+            
+    
+            var marker_30bd10b48370a7bd906613e6e193568f = L.marker(
+                [45.779153, -84.733437],
+                {
+}
+            ).addTo(feature_group_65964524600b5bc787cc3acdb3acaf02);
+        
+    
+            var div_icon_2fd1ebb5dcd1f4c50bd8811d302bff4b = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003crect\n            x=\"3\" y=\"3\"\n            width=\"94\" height=\"94\"\n            fill=\"blue\"\n            fill-opacity=\"0.65\"\n            stroke=\"blue\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "mdt-priority-marker",
+});
+        
+    
+        var popup_92b1257eb35609d39f69d0fb15c9f1f2 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_2cd7effee78677ca1e4526c23821f6eb = $(`<div id="html_2cd7effee78677ca1e4526c23821f6eb" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> MDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> Low<br>         <b>Rank:</b> 27<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 45.779153<br>         <b>Longitude:</b> -84.733437     </div>     </div>`)[0];
+                popup_92b1257eb35609d39f69d0fb15c9f1f2.setContent(html_2cd7effee78677ca1e4526c23821f6eb);
+            
+        
+
+        marker_30bd10b48370a7bd906613e6e193568f.bindPopup(popup_92b1257eb35609d39f69d0fb15c9f1f2)
+        ;
+
+        
+    
+    
+            marker_30bd10b48370a7bd906613e6e193568f.bindTooltip(
+                `<div>
+                     MDT | 1% Market Share<br>Priority: Low<br>Rank: 27<br>Required chargers: 2<br>Latitude: 45.779153<br>Longitude: -84.733437
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_30bd10b48370a7bd906613e6e193568f.setIcon(div_icon_2fd1ebb5dcd1f4c50bd8811d302bff4b);
+            
+    
+            var marker_60132b5e28cbdf097d93a2863ae54ea4 = L.marker(
+                [43.595995, -83.948429],
+                {
+}
+            ).addTo(feature_group_65964524600b5bc787cc3acdb3acaf02);
+        
+    
+            var div_icon_ab660d572d7125ec43f3b2129fb9d2f5 = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003crect\n            x=\"3\" y=\"3\"\n            width=\"94\" height=\"94\"\n            fill=\"blue\"\n            fill-opacity=\"0.65\"\n            stroke=\"blue\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "mdt-priority-marker",
+});
+        
+    
+        var popup_7d1982ba78613594d6a40c8d55bbd145 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_d2e2bedf0259ff0aa7dc2fb4aaa09be7 = $(`<div id="html_d2e2bedf0259ff0aa7dc2fb4aaa09be7" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> MDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> Low<br>         <b>Rank:</b> 28<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 43.595995<br>         <b>Longitude:</b> -83.948429     </div>     </div>`)[0];
+                popup_7d1982ba78613594d6a40c8d55bbd145.setContent(html_d2e2bedf0259ff0aa7dc2fb4aaa09be7);
+            
+        
+
+        marker_60132b5e28cbdf097d93a2863ae54ea4.bindPopup(popup_7d1982ba78613594d6a40c8d55bbd145)
+        ;
+
+        
+    
+    
+            marker_60132b5e28cbdf097d93a2863ae54ea4.bindTooltip(
+                `<div>
+                     MDT | 1% Market Share<br>Priority: Low<br>Rank: 28<br>Required chargers: 2<br>Latitude: 43.595995<br>Longitude: -83.948429
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_60132b5e28cbdf097d93a2863ae54ea4.setIcon(div_icon_ab660d572d7125ec43f3b2129fb9d2f5);
+            
+    
+            var marker_f1fb7cb200819200ac518e623eb2419d = L.marker(
+                [46.58529, -88.472279],
+                {
+}
+            ).addTo(feature_group_65964524600b5bc787cc3acdb3acaf02);
+        
+    
+            var div_icon_703d14accaa1387d8e5e2150c2306768 = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003crect\n            x=\"3\" y=\"3\"\n            width=\"94\" height=\"94\"\n            fill=\"blue\"\n            fill-opacity=\"0.65\"\n            stroke=\"blue\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "mdt-priority-marker",
+});
+        
+    
+        var popup_d6a7c89357b2b7375356752874218ffd = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_47531b6b1e41ef7a5f6a339d45c88b99 = $(`<div id="html_47531b6b1e41ef7a5f6a339d45c88b99" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> MDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> Low<br>         <b>Rank:</b> 29<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 46.585290<br>         <b>Longitude:</b> -88.472279     </div>     </div>`)[0];
+                popup_d6a7c89357b2b7375356752874218ffd.setContent(html_47531b6b1e41ef7a5f6a339d45c88b99);
+            
+        
+
+        marker_f1fb7cb200819200ac518e623eb2419d.bindPopup(popup_d6a7c89357b2b7375356752874218ffd)
+        ;
+
+        
+    
+    
+            marker_f1fb7cb200819200ac518e623eb2419d.bindTooltip(
+                `<div>
+                     MDT | 1% Market Share<br>Priority: Low<br>Rank: 29<br>Required chargers: 2<br>Latitude: 46.585290<br>Longitude: -88.472279
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_f1fb7cb200819200ac518e623eb2419d.setIcon(div_icon_703d14accaa1387d8e5e2150c2306768);
+            
+    
+            var marker_4570168a5d2a7468737e83bf3cc3aa28 = L.marker(
+                [42.34966, -83.09829],
+                {
+}
+            ).addTo(feature_group_65964524600b5bc787cc3acdb3acaf02);
+        
+    
+            var div_icon_b57394d3375ffcc41179dcd0f8f48c43 = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003crect\n            x=\"3\" y=\"3\"\n            width=\"94\" height=\"94\"\n            fill=\"blue\"\n            fill-opacity=\"0.65\"\n            stroke=\"blue\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "mdt-priority-marker",
+});
+        
+    
+        var popup_52362ccd61b2cbf254d415da76f1d806 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_e2b94dc38da5845a51a0b3418e150d76 = $(`<div id="html_e2b94dc38da5845a51a0b3418e150d76" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> MDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> Low<br>         <b>Rank:</b> 30<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 42.349660<br>         <b>Longitude:</b> -83.098290     </div>     </div>`)[0];
+                popup_52362ccd61b2cbf254d415da76f1d806.setContent(html_e2b94dc38da5845a51a0b3418e150d76);
+            
+        
+
+        marker_4570168a5d2a7468737e83bf3cc3aa28.bindPopup(popup_52362ccd61b2cbf254d415da76f1d806)
+        ;
+
+        
+    
+    
+            marker_4570168a5d2a7468737e83bf3cc3aa28.bindTooltip(
+                `<div>
+                     MDT | 1% Market Share<br>Priority: Low<br>Rank: 30<br>Required chargers: 2<br>Latitude: 42.349660<br>Longitude: -83.098290
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_4570168a5d2a7468737e83bf3cc3aa28.setIcon(div_icon_b57394d3375ffcc41179dcd0f8f48c43);
+            
+    
+            var marker_6c1bb4bce051cdb7d7671f4f1fef48f6 = L.marker(
+                [43.424696, -85.495913],
+                {
+}
+            ).addTo(feature_group_65964524600b5bc787cc3acdb3acaf02);
+        
+    
+            var div_icon_c58a0e97caa68965cf846beff092783e = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003crect\n            x=\"3\" y=\"3\"\n            width=\"94\" height=\"94\"\n            fill=\"blue\"\n            fill-opacity=\"0.65\"\n            stroke=\"blue\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "mdt-priority-marker",
+});
+        
+    
+        var popup_7c712c711836f884ff9c8403ea96b80b = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_b78681711777546564c5100583fe21f8 = $(`<div id="html_b78681711777546564c5100583fe21f8" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> MDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> Low<br>         <b>Rank:</b> 31<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 43.424696<br>         <b>Longitude:</b> -85.495913     </div>     </div>`)[0];
+                popup_7c712c711836f884ff9c8403ea96b80b.setContent(html_b78681711777546564c5100583fe21f8);
+            
+        
+
+        marker_6c1bb4bce051cdb7d7671f4f1fef48f6.bindPopup(popup_7c712c711836f884ff9c8403ea96b80b)
+        ;
+
+        
+    
+    
+            marker_6c1bb4bce051cdb7d7671f4f1fef48f6.bindTooltip(
+                `<div>
+                     MDT | 1% Market Share<br>Priority: Low<br>Rank: 31<br>Required chargers: 2<br>Latitude: 43.424696<br>Longitude: -85.495913
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_6c1bb4bce051cdb7d7671f4f1fef48f6.setIcon(div_icon_c58a0e97caa68965cf846beff092783e);
+            
+    
+            feature_group_65964524600b5bc787cc3acdb3acaf02.addTo(map_bab99a47621131f5ff3edbc1b240a4f3);
+        
+    
+            var feature_group_01b9906ca2f1e943356f7dbf9eeb7778 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var marker_56693bed8d49abe527aa90b2ae760411 = L.marker(
+                [41.809165, -83.450326],
+                {
+}
+            ).addTo(feature_group_01b9906ca2f1e943356f7dbf9eeb7778);
+        
+    
+            var div_icon_c098b462be20675c782a6a842133cf8f = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003cpolygon\n            points=\"50,3 97,97 3,97\"\n            fill=\"red\"\n            fill-opacity=\"0.65\"\n            stroke=\"red\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "hdt-priority-marker",
+});
+        
+    
+        var popup_c5a1a1f2a0bba7bbae9ca862dd27987a = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_beeb66a595fdac720f61704bf79317c0 = $(`<div id="html_beeb66a595fdac720f61704bf79317c0" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> HDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> High<br>         <b>Rank:</b> 1<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 41.809165<br>         <b>Longitude:</b> -83.450326     </div>     </div>`)[0];
+                popup_c5a1a1f2a0bba7bbae9ca862dd27987a.setContent(html_beeb66a595fdac720f61704bf79317c0);
+            
+        
+
+        marker_56693bed8d49abe527aa90b2ae760411.bindPopup(popup_c5a1a1f2a0bba7bbae9ca862dd27987a)
+        ;
+
+        
+    
+    
+            marker_56693bed8d49abe527aa90b2ae760411.bindTooltip(
+                `<div>
+                     HDT | 1% Market Share<br>Priority: High<br>Rank: 1<br>Required chargers: 2<br>Latitude: 41.809165<br>Longitude: -83.450326
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_56693bed8d49abe527aa90b2ae760411.setIcon(div_icon_c098b462be20675c782a6a842133cf8f);
+            
+    
+            var marker_d9eecd576079ae85bc61481ad3c36d33 = L.marker(
+                [42.134883, -86.368105],
+                {
+}
+            ).addTo(feature_group_01b9906ca2f1e943356f7dbf9eeb7778);
+        
+    
+            var div_icon_98fac4b7737d0e22872d59d16c90836b = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003cpolygon\n            points=\"50,3 97,97 3,97\"\n            fill=\"red\"\n            fill-opacity=\"0.65\"\n            stroke=\"red\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "hdt-priority-marker",
+});
+        
+    
+        var popup_b4b1a1932c3e01d6529b7b75f384844b = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_97ec0906c8f8d5ca6464d0ef10dd06c5 = $(`<div id="html_97ec0906c8f8d5ca6464d0ef10dd06c5" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> HDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> High<br>         <b>Rank:</b> 2<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 42.134883<br>         <b>Longitude:</b> -86.368105     </div>     </div>`)[0];
+                popup_b4b1a1932c3e01d6529b7b75f384844b.setContent(html_97ec0906c8f8d5ca6464d0ef10dd06c5);
+            
+        
+
+        marker_d9eecd576079ae85bc61481ad3c36d33.bindPopup(popup_b4b1a1932c3e01d6529b7b75f384844b)
+        ;
+
+        
+    
+    
+            marker_d9eecd576079ae85bc61481ad3c36d33.bindTooltip(
+                `<div>
+                     HDT | 1% Market Share<br>Priority: High<br>Rank: 2<br>Required chargers: 2<br>Latitude: 42.134883<br>Longitude: -86.368105
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_d9eecd576079ae85bc61481ad3c36d33.setIcon(div_icon_98fac4b7737d0e22872d59d16c90836b);
+            
+    
+            var marker_d5e2c4e8c9b4c49e1d0e5c1a43bb6ee6 = L.marker(
+                [42.297453, -84.996666],
+                {
+}
+            ).addTo(feature_group_01b9906ca2f1e943356f7dbf9eeb7778);
+        
+    
+            var div_icon_608b651ac953963fd528e18921448d57 = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003cpolygon\n            points=\"50,3 97,97 3,97\"\n            fill=\"red\"\n            fill-opacity=\"0.65\"\n            stroke=\"red\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "hdt-priority-marker",
+});
+        
+    
+        var popup_942d64dba7a63dc5020bdd06d3841307 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_adae17249a524d69cb81386c28efd4b1 = $(`<div id="html_adae17249a524d69cb81386c28efd4b1" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> HDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> High<br>         <b>Rank:</b> 3<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 42.297453<br>         <b>Longitude:</b> -84.996666     </div>     </div>`)[0];
+                popup_942d64dba7a63dc5020bdd06d3841307.setContent(html_adae17249a524d69cb81386c28efd4b1);
+            
+        
+
+        marker_d5e2c4e8c9b4c49e1d0e5c1a43bb6ee6.bindPopup(popup_942d64dba7a63dc5020bdd06d3841307)
+        ;
+
+        
+    
+    
+            marker_d5e2c4e8c9b4c49e1d0e5c1a43bb6ee6.bindTooltip(
+                `<div>
+                     HDT | 1% Market Share<br>Priority: High<br>Rank: 3<br>Required chargers: 2<br>Latitude: 42.297453<br>Longitude: -84.996666
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_d5e2c4e8c9b4c49e1d0e5c1a43bb6ee6.setIcon(div_icon_608b651ac953963fd528e18921448d57);
+            
+    
+            var marker_1e84f516ac1931938d590033109ddb7a = L.marker(
+                [42.34966, -83.09829],
+                {
+}
+            ).addTo(feature_group_01b9906ca2f1e943356f7dbf9eeb7778);
+        
+    
+            var div_icon_0d6b983ba06e589fa76915396bee2071 = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"14.0\" height=\"14.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003cpolygon\n            points=\"50,3 97,97 3,97\"\n            fill=\"red\"\n            fill-opacity=\"0.65\"\n            stroke=\"red\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [14.0, 14.0],
+  "iconAnchor": [7.0, 7.0],
+  "className": "hdt-priority-marker",
+});
+        
+    
+        var popup_8e29fec66d8f0be9d24ed53d1470a734 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_7ab50aa16edec29bac5cca0535c23257 = $(`<div id="html_7ab50aa16edec29bac5cca0535c23257" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> HDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> High<br>         <b>Rank:</b> 4<br>         <b>Required chargers:</b> 4<br>         <b>Latitude:</b> 42.349660<br>         <b>Longitude:</b> -83.098290     </div>     </div>`)[0];
+                popup_8e29fec66d8f0be9d24ed53d1470a734.setContent(html_7ab50aa16edec29bac5cca0535c23257);
+            
+        
+
+        marker_1e84f516ac1931938d590033109ddb7a.bindPopup(popup_8e29fec66d8f0be9d24ed53d1470a734)
+        ;
+
+        
+    
+    
+            marker_1e84f516ac1931938d590033109ddb7a.bindTooltip(
+                `<div>
+                     HDT | 1% Market Share<br>Priority: High<br>Rank: 4<br>Required chargers: 4<br>Latitude: 42.349660<br>Longitude: -83.098290
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_1e84f516ac1931938d590033109ddb7a.setIcon(div_icon_0d6b983ba06e589fa76915396bee2071);
+            
+    
+            var marker_f7f45dc3e6fe4302aa2c73dee94e0226 = L.marker(
+                [42.237977, -85.637953],
+                {
+}
+            ).addTo(feature_group_01b9906ca2f1e943356f7dbf9eeb7778);
+        
+    
+            var div_icon_7a079b299610e9c9d7dbd69ab0b48e5b = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"14.0\" height=\"14.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003cpolygon\n            points=\"50,3 97,97 3,97\"\n            fill=\"red\"\n            fill-opacity=\"0.65\"\n            stroke=\"red\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [14.0, 14.0],
+  "iconAnchor": [7.0, 7.0],
+  "className": "hdt-priority-marker",
+});
+        
+    
+        var popup_06e926d00a642e7b971b8aaee0a05963 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_4a5bf5bab22942b7015960245710256a = $(`<div id="html_4a5bf5bab22942b7015960245710256a" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> HDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> High<br>         <b>Rank:</b> 5<br>         <b>Required chargers:</b> 4<br>         <b>Latitude:</b> 42.237977<br>         <b>Longitude:</b> -85.637953     </div>     </div>`)[0];
+                popup_06e926d00a642e7b971b8aaee0a05963.setContent(html_4a5bf5bab22942b7015960245710256a);
+            
+        
+
+        marker_f7f45dc3e6fe4302aa2c73dee94e0226.bindPopup(popup_06e926d00a642e7b971b8aaee0a05963)
+        ;
+
+        
+    
+    
+            marker_f7f45dc3e6fe4302aa2c73dee94e0226.bindTooltip(
+                `<div>
+                     HDT | 1% Market Share<br>Priority: High<br>Rank: 5<br>Required chargers: 4<br>Latitude: 42.237977<br>Longitude: -85.637953
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_f7f45dc3e6fe4302aa2c73dee94e0226.setIcon(div_icon_7a079b299610e9c9d7dbd69ab0b48e5b);
+            
+    
+            var marker_10d1bbc38fcb29728dc705aac9022877 = L.marker(
+                [42.72425, -84.509962],
+                {
+}
+            ).addTo(feature_group_01b9906ca2f1e943356f7dbf9eeb7778);
+        
+    
+            var div_icon_39a3d4c7860fbc5cbe5d6ebec4aaea56 = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003cpolygon\n            points=\"50,3 97,97 3,97\"\n            fill=\"red\"\n            fill-opacity=\"0.65\"\n            stroke=\"red\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "hdt-priority-marker",
+});
+        
+    
+        var popup_9220813972401fbc46170f307fbc7d75 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_275078507bf237114d946a96ce0c5741 = $(`<div id="html_275078507bf237114d946a96ce0c5741" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> HDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> High<br>         <b>Rank:</b> 6<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 42.724250<br>         <b>Longitude:</b> -84.509962     </div>     </div>`)[0];
+                popup_9220813972401fbc46170f307fbc7d75.setContent(html_275078507bf237114d946a96ce0c5741);
+            
+        
+
+        marker_10d1bbc38fcb29728dc705aac9022877.bindPopup(popup_9220813972401fbc46170f307fbc7d75)
+        ;
+
+        
+    
+    
+            marker_10d1bbc38fcb29728dc705aac9022877.bindTooltip(
+                `<div>
+                     HDT | 1% Market Share<br>Priority: High<br>Rank: 6<br>Required chargers: 2<br>Latitude: 42.724250<br>Longitude: -84.509962
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_10d1bbc38fcb29728dc705aac9022877.setIcon(div_icon_39a3d4c7860fbc5cbe5d6ebec4aaea56);
+            
+    
+            var marker_b6cc05b17ee178d42b3fe3264c8bfa22 = L.marker(
+                [42.272121, -84.427015],
+                {
+}
+            ).addTo(feature_group_01b9906ca2f1e943356f7dbf9eeb7778);
+        
+    
+            var div_icon_87cd871dace73d3008ad9ba9fb2a1a4d = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003cpolygon\n            points=\"50,3 97,97 3,97\"\n            fill=\"red\"\n            fill-opacity=\"0.65\"\n            stroke=\"red\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "hdt-priority-marker",
+});
+        
+    
+        var popup_60648fefa7ea9b4c8bbb05de75cf4d00 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_9751b68a90304fcd426b390b1c0113ec = $(`<div id="html_9751b68a90304fcd426b390b1c0113ec" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> HDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> High<br>         <b>Rank:</b> 7<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 42.272121<br>         <b>Longitude:</b> -84.427015     </div>     </div>`)[0];
+                popup_60648fefa7ea9b4c8bbb05de75cf4d00.setContent(html_9751b68a90304fcd426b390b1c0113ec);
+            
+        
+
+        marker_b6cc05b17ee178d42b3fe3264c8bfa22.bindPopup(popup_60648fefa7ea9b4c8bbb05de75cf4d00)
+        ;
+
+        
+    
+    
+            marker_b6cc05b17ee178d42b3fe3264c8bfa22.bindTooltip(
+                `<div>
+                     HDT | 1% Market Share<br>Priority: High<br>Rank: 7<br>Required chargers: 2<br>Latitude: 42.272121<br>Longitude: -84.427015
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_b6cc05b17ee178d42b3fe3264c8bfa22.setIcon(div_icon_87cd871dace73d3008ad9ba9fb2a1a4d);
+            
+    
+            var marker_5973c73cc61aa5c5facfb3e5ebefe1dc = L.marker(
+                [42.984824, -83.733504],
+                {
+}
+            ).addTo(feature_group_01b9906ca2f1e943356f7dbf9eeb7778);
+        
+    
+            var div_icon_b55d019f5f9db3ca9fd26403baa73053 = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003cpolygon\n            points=\"50,3 97,97 3,97\"\n            fill=\"red\"\n            fill-opacity=\"0.65\"\n            stroke=\"red\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "hdt-priority-marker",
+});
+        
+    
+        var popup_98d34ac9f7910061faad08c9def7a35c = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_95ff67f01b97e0f7b9f0036aab63cb14 = $(`<div id="html_95ff67f01b97e0f7b9f0036aab63cb14" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> HDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> High<br>         <b>Rank:</b> 8<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 42.984824<br>         <b>Longitude:</b> -83.733504     </div>     </div>`)[0];
+                popup_98d34ac9f7910061faad08c9def7a35c.setContent(html_95ff67f01b97e0f7b9f0036aab63cb14);
+            
+        
+
+        marker_5973c73cc61aa5c5facfb3e5ebefe1dc.bindPopup(popup_98d34ac9f7910061faad08c9def7a35c)
+        ;
+
+        
+    
+    
+            marker_5973c73cc61aa5c5facfb3e5ebefe1dc.bindTooltip(
+                `<div>
+                     HDT | 1% Market Share<br>Priority: High<br>Rank: 8<br>Required chargers: 2<br>Latitude: 42.984824<br>Longitude: -83.733504
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_5973c73cc61aa5c5facfb3e5ebefe1dc.setIcon(div_icon_b55d019f5f9db3ca9fd26403baa73053);
+            
+    
+            var marker_737b27e1cb4b07e91e76be9d14818b53 = L.marker(
+                [42.225771, -83.685685],
+                {
+}
+            ).addTo(feature_group_01b9906ca2f1e943356f7dbf9eeb7778);
+        
+    
+            var div_icon_edbf255cb8cf5e98964656bd21425c64 = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003cpolygon\n            points=\"50,3 97,97 3,97\"\n            fill=\"green\"\n            fill-opacity=\"0.65\"\n            stroke=\"green\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "hdt-priority-marker",
+});
+        
+    
+        var popup_298dafd4afb12cae050f7b8f3e191af4 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_51ed59c77a17321586aa697a11ce2c86 = $(`<div id="html_51ed59c77a17321586aa697a11ce2c86" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> HDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> Medium<br>         <b>Rank:</b> 9<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 42.225771<br>         <b>Longitude:</b> -83.685685     </div>     </div>`)[0];
+                popup_298dafd4afb12cae050f7b8f3e191af4.setContent(html_51ed59c77a17321586aa697a11ce2c86);
+            
+        
+
+        marker_737b27e1cb4b07e91e76be9d14818b53.bindPopup(popup_298dafd4afb12cae050f7b8f3e191af4)
+        ;
+
+        
+    
+    
+            marker_737b27e1cb4b07e91e76be9d14818b53.bindTooltip(
+                `<div>
+                     HDT | 1% Market Share<br>Priority: Medium<br>Rank: 9<br>Required chargers: 2<br>Latitude: 42.225771<br>Longitude: -83.685685
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_737b27e1cb4b07e91e76be9d14818b53.setIcon(div_icon_edbf255cb8cf5e98964656bd21425c64);
+            
+    
+            var marker_de956b227b4faf5dcb335f6697630719 = L.marker(
+                [43.887497, -85.528149],
+                {
+}
+            ).addTo(feature_group_01b9906ca2f1e943356f7dbf9eeb7778);
+        
+    
+            var div_icon_ba7d6efe1037963908694770e69058a8 = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003cpolygon\n            points=\"50,3 97,97 3,97\"\n            fill=\"green\"\n            fill-opacity=\"0.65\"\n            stroke=\"green\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "hdt-priority-marker",
+});
+        
+    
+        var popup_98ea7786eec3d9de2bb842ebb21d75f5 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_1f2e8bc2fbddb4557eaa2e276c98d734 = $(`<div id="html_1f2e8bc2fbddb4557eaa2e276c98d734" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> HDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> Medium<br>         <b>Rank:</b> 10<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 43.887497<br>         <b>Longitude:</b> -85.528149     </div>     </div>`)[0];
+                popup_98ea7786eec3d9de2bb842ebb21d75f5.setContent(html_1f2e8bc2fbddb4557eaa2e276c98d734);
+            
+        
+
+        marker_de956b227b4faf5dcb335f6697630719.bindPopup(popup_98ea7786eec3d9de2bb842ebb21d75f5)
+        ;
+
+        
+    
+    
+            marker_de956b227b4faf5dcb335f6697630719.bindTooltip(
+                `<div>
+                     HDT | 1% Market Share<br>Priority: Medium<br>Rank: 10<br>Required chargers: 2<br>Latitude: 43.887497<br>Longitude: -85.528149
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_de956b227b4faf5dcb335f6697630719.setIcon(div_icon_ba7d6efe1037963908694770e69058a8);
+            
+    
+            var marker_783a73b9dde7b92319883c8f2b0ae353 = L.marker(
+                [42.972439, -82.488375],
+                {
+}
+            ).addTo(feature_group_01b9906ca2f1e943356f7dbf9eeb7778);
+        
+    
+            var div_icon_583a71050bca635ecda2f33c71d49f9d = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003cpolygon\n            points=\"50,3 97,97 3,97\"\n            fill=\"green\"\n            fill-opacity=\"0.65\"\n            stroke=\"green\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "hdt-priority-marker",
+});
+        
+    
+        var popup_24d4dd31bbb6888942595b0e79305ba1 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_23db274f5603a88d5bd5f665c8dd4934 = $(`<div id="html_23db274f5603a88d5bd5f665c8dd4934" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> HDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> Medium<br>         <b>Rank:</b> 11<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 42.972439<br>         <b>Longitude:</b> -82.488375     </div>     </div>`)[0];
+                popup_24d4dd31bbb6888942595b0e79305ba1.setContent(html_23db274f5603a88d5bd5f665c8dd4934);
+            
+        
+
+        marker_783a73b9dde7b92319883c8f2b0ae353.bindPopup(popup_24d4dd31bbb6888942595b0e79305ba1)
+        ;
+
+        
+    
+    
+            marker_783a73b9dde7b92319883c8f2b0ae353.bindTooltip(
+                `<div>
+                     HDT | 1% Market Share<br>Priority: Medium<br>Rank: 11<br>Required chargers: 2<br>Latitude: 42.972439<br>Longitude: -82.488375
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_783a73b9dde7b92319883c8f2b0ae353.setIcon(div_icon_583a71050bca635ecda2f33c71d49f9d);
+            
+    
+            var marker_5e705d689fd9e997d0d7ff4dc7dd6479 = L.marker(
+                [46.097721, -88.347779],
+                {
+}
+            ).addTo(feature_group_01b9906ca2f1e943356f7dbf9eeb7778);
+        
+    
+            var div_icon_dbe6b0e84d6117199856bc95ea380ab8 = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"14.0\" height=\"14.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003cpolygon\n            points=\"50,3 97,97 3,97\"\n            fill=\"green\"\n            fill-opacity=\"0.65\"\n            stroke=\"green\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [14.0, 14.0],
+  "iconAnchor": [7.0, 7.0],
+  "className": "hdt-priority-marker",
+});
+        
+    
+        var popup_bf671047ecd906a20d14f940bb2568ad = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_cdd9a360bb5d624209afdae6b9558b8a = $(`<div id="html_cdd9a360bb5d624209afdae6b9558b8a" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> HDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> Medium<br>         <b>Rank:</b> 12<br>         <b>Required chargers:</b> 4<br>         <b>Latitude:</b> 46.097721<br>         <b>Longitude:</b> -88.347779     </div>     </div>`)[0];
+                popup_bf671047ecd906a20d14f940bb2568ad.setContent(html_cdd9a360bb5d624209afdae6b9558b8a);
+            
+        
+
+        marker_5e705d689fd9e997d0d7ff4dc7dd6479.bindPopup(popup_bf671047ecd906a20d14f940bb2568ad)
+        ;
+
+        
+    
+    
+            marker_5e705d689fd9e997d0d7ff4dc7dd6479.bindTooltip(
+                `<div>
+                     HDT | 1% Market Share<br>Priority: Medium<br>Rank: 12<br>Required chargers: 4<br>Latitude: 46.097721<br>Longitude: -88.347779
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_5e705d689fd9e997d0d7ff4dc7dd6479.setIcon(div_icon_dbe6b0e84d6117199856bc95ea380ab8);
+            
+    
+            var marker_a89d4b0a18f6fc9056db14f243c55648 = L.marker(
+                [43.828597, -84.748942],
+                {
+}
+            ).addTo(feature_group_01b9906ca2f1e943356f7dbf9eeb7778);
+        
+    
+            var div_icon_21e24a34b18588a9a82eb7c9e1a24ddf = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003cpolygon\n            points=\"50,3 97,97 3,97\"\n            fill=\"green\"\n            fill-opacity=\"0.65\"\n            stroke=\"green\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "hdt-priority-marker",
+});
+        
+    
+        var popup_ba9c054ebe01a74842916de92d092e8d = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_2ed08700b53c47c6357486ace44cef23 = $(`<div id="html_2ed08700b53c47c6357486ace44cef23" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> HDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> Medium<br>         <b>Rank:</b> 13<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 43.828597<br>         <b>Longitude:</b> -84.748942     </div>     </div>`)[0];
+                popup_ba9c054ebe01a74842916de92d092e8d.setContent(html_2ed08700b53c47c6357486ace44cef23);
+            
+        
+
+        marker_a89d4b0a18f6fc9056db14f243c55648.bindPopup(popup_ba9c054ebe01a74842916de92d092e8d)
+        ;
+
+        
+    
+    
+            marker_a89d4b0a18f6fc9056db14f243c55648.bindTooltip(
+                `<div>
+                     HDT | 1% Market Share<br>Priority: Medium<br>Rank: 13<br>Required chargers: 2<br>Latitude: 43.828597<br>Longitude: -84.748942
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_a89d4b0a18f6fc9056db14f243c55648.setIcon(div_icon_21e24a34b18588a9a82eb7c9e1a24ddf);
+            
+    
+            var marker_886a040402e7aa78df3bb5af5e4c3756 = L.marker(
+                [43.595995, -83.948429],
+                {
+}
+            ).addTo(feature_group_01b9906ca2f1e943356f7dbf9eeb7778);
+        
+    
+            var div_icon_d32185c0b354c699fc3bca9311cb6979 = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003cpolygon\n            points=\"50,3 97,97 3,97\"\n            fill=\"green\"\n            fill-opacity=\"0.65\"\n            stroke=\"green\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "hdt-priority-marker",
+});
+        
+    
+        var popup_dfe8e00bcaabb387121a193d88a3d127 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_25cd3622d98771c9d774c4a6dff131ea = $(`<div id="html_25cd3622d98771c9d774c4a6dff131ea" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> HDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> Medium<br>         <b>Rank:</b> 14<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 43.595995<br>         <b>Longitude:</b> -83.948429     </div>     </div>`)[0];
+                popup_dfe8e00bcaabb387121a193d88a3d127.setContent(html_25cd3622d98771c9d774c4a6dff131ea);
+            
+        
+
+        marker_886a040402e7aa78df3bb5af5e4c3756.bindPopup(popup_dfe8e00bcaabb387121a193d88a3d127)
+        ;
+
+        
+    
+    
+            marker_886a040402e7aa78df3bb5af5e4c3756.bindTooltip(
+                `<div>
+                     HDT | 1% Market Share<br>Priority: Medium<br>Rank: 14<br>Required chargers: 2<br>Latitude: 43.595995<br>Longitude: -83.948429
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_886a040402e7aa78df3bb5af5e4c3756.setIcon(div_icon_d32185c0b354c699fc3bca9311cb6979);
+            
+    
+            var marker_8b3f01c6d3ae9523ddd273486f9c0c34 = L.marker(
+                [42.973046, -85.677587],
+                {
+}
+            ).addTo(feature_group_01b9906ca2f1e943356f7dbf9eeb7778);
+        
+    
+            var div_icon_0e38a8f669a97ef022884da10e8da28a = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003cpolygon\n            points=\"50,3 97,97 3,97\"\n            fill=\"green\"\n            fill-opacity=\"0.65\"\n            stroke=\"green\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "hdt-priority-marker",
+});
+        
+    
+        var popup_661c343aec97ce2921c1d624b1c1d8f5 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_20b8d5695fe9207695a19b0b31eeb74b = $(`<div id="html_20b8d5695fe9207695a19b0b31eeb74b" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> HDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> Medium<br>         <b>Rank:</b> 15<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 42.973046<br>         <b>Longitude:</b> -85.677587     </div>     </div>`)[0];
+                popup_661c343aec97ce2921c1d624b1c1d8f5.setContent(html_20b8d5695fe9207695a19b0b31eeb74b);
+            
+        
+
+        marker_8b3f01c6d3ae9523ddd273486f9c0c34.bindPopup(popup_661c343aec97ce2921c1d624b1c1d8f5)
+        ;
+
+        
+    
+    
+            marker_8b3f01c6d3ae9523ddd273486f9c0c34.bindTooltip(
+                `<div>
+                     HDT | 1% Market Share<br>Priority: Medium<br>Rank: 15<br>Required chargers: 2<br>Latitude: 42.973046<br>Longitude: -85.677587
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_8b3f01c6d3ae9523ddd273486f9c0c34.setIcon(div_icon_0e38a8f669a97ef022884da10e8da28a);
+            
+    
+            var marker_e67658414f89c67adad5c8fe06b4f4e8 = L.marker(
+                [45.027432, -84.688282],
+                {
+}
+            ).addTo(feature_group_01b9906ca2f1e943356f7dbf9eeb7778);
+        
+    
+            var div_icon_5c0eb48e8760a872d2198508fdd58de9 = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003cpolygon\n            points=\"50,3 97,97 3,97\"\n            fill=\"green\"\n            fill-opacity=\"0.65\"\n            stroke=\"green\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "hdt-priority-marker",
+});
+        
+    
+        var popup_6f3c15a0cb2b1f813b462875c52049f7 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_7bf38ac5b86ae287795a98a218517ab2 = $(`<div id="html_7bf38ac5b86ae287795a98a218517ab2" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> HDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> Medium<br>         <b>Rank:</b> 16<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 45.027432<br>         <b>Longitude:</b> -84.688282     </div>     </div>`)[0];
+                popup_6f3c15a0cb2b1f813b462875c52049f7.setContent(html_7bf38ac5b86ae287795a98a218517ab2);
+            
+        
+
+        marker_e67658414f89c67adad5c8fe06b4f4e8.bindPopup(popup_6f3c15a0cb2b1f813b462875c52049f7)
+        ;
+
+        
+    
+    
+            marker_e67658414f89c67adad5c8fe06b4f4e8.bindTooltip(
+                `<div>
+                     HDT | 1% Market Share<br>Priority: Medium<br>Rank: 16<br>Required chargers: 2<br>Latitude: 45.027432<br>Longitude: -84.688282
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_e67658414f89c67adad5c8fe06b4f4e8.setIcon(div_icon_5c0eb48e8760a872d2198508fdd58de9);
+            
+    
+            var marker_a1b2f65435860aab96a5fe8bbd8f62b4 = L.marker(
+                [45.779153, -84.733437],
+                {
+}
+            ).addTo(feature_group_01b9906ca2f1e943356f7dbf9eeb7778);
+        
+    
+            var div_icon_d3cf53572e7ef32b8c6e113adc652b5e = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"17.0\" height=\"17.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003cpolygon\n            points=\"50,3 97,97 3,97\"\n            fill=\"blue\"\n            fill-opacity=\"0.65\"\n            stroke=\"blue\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [17.0, 17.0],
+  "iconAnchor": [8.5, 8.5],
+  "className": "hdt-priority-marker",
+});
+        
+    
+        var popup_dccffe8654f5e7887449de36ccea6ebf = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_7053a86480af16628130dadcbee4786c = $(`<div id="html_7053a86480af16628130dadcbee4786c" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> HDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> Low<br>         <b>Rank:</b> 17<br>         <b>Required chargers:</b> 6<br>         <b>Latitude:</b> 45.779153<br>         <b>Longitude:</b> -84.733437     </div>     </div>`)[0];
+                popup_dccffe8654f5e7887449de36ccea6ebf.setContent(html_7053a86480af16628130dadcbee4786c);
+            
+        
+
+        marker_a1b2f65435860aab96a5fe8bbd8f62b4.bindPopup(popup_dccffe8654f5e7887449de36ccea6ebf)
+        ;
+
+        
+    
+    
+            marker_a1b2f65435860aab96a5fe8bbd8f62b4.bindTooltip(
+                `<div>
+                     HDT | 1% Market Share<br>Priority: Low<br>Rank: 17<br>Required chargers: 6<br>Latitude: 45.779153<br>Longitude: -84.733437
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_a1b2f65435860aab96a5fe8bbd8f62b4.setIcon(div_icon_d3cf53572e7ef32b8c6e113adc652b5e);
+            
+    
+            var marker_80d1b6638456e906cc4885cb4c70795e = L.marker(
+                [44.716742, -85.18996],
+                {
+}
+            ).addTo(feature_group_01b9906ca2f1e943356f7dbf9eeb7778);
+        
+    
+            var div_icon_a0626edc7bca10b3d6635f9bf5a2c338 = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003cpolygon\n            points=\"50,3 97,97 3,97\"\n            fill=\"blue\"\n            fill-opacity=\"0.65\"\n            stroke=\"blue\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "hdt-priority-marker",
+});
+        
+    
+        var popup_97c0ff9a1630eabb3d79c4587bdf68bc = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_5c66259a6238c4ec6812ad81fe2052b5 = $(`<div id="html_5c66259a6238c4ec6812ad81fe2052b5" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> HDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> Low<br>         <b>Rank:</b> 18<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 44.716742<br>         <b>Longitude:</b> -85.189960     </div>     </div>`)[0];
+                popup_97c0ff9a1630eabb3d79c4587bdf68bc.setContent(html_5c66259a6238c4ec6812ad81fe2052b5);
+            
+        
+
+        marker_80d1b6638456e906cc4885cb4c70795e.bindPopup(popup_97c0ff9a1630eabb3d79c4587bdf68bc)
+        ;
+
+        
+    
+    
+            marker_80d1b6638456e906cc4885cb4c70795e.bindTooltip(
+                `<div>
+                     HDT | 1% Market Share<br>Priority: Low<br>Rank: 18<br>Required chargers: 2<br>Latitude: 44.716742<br>Longitude: -85.189960
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_80d1b6638456e906cc4885cb4c70795e.setIcon(div_icon_a0626edc7bca10b3d6635f9bf5a2c338);
+            
+    
+            var marker_a8177d33e26b4c06216b9771be09050b = L.marker(
+                [45.952916, -86.244862],
+                {
+}
+            ).addTo(feature_group_01b9906ca2f1e943356f7dbf9eeb7778);
+        
+    
+            var div_icon_4e2ed108dd757718101241c46689a669 = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003cpolygon\n            points=\"50,3 97,97 3,97\"\n            fill=\"blue\"\n            fill-opacity=\"0.65\"\n            stroke=\"blue\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "hdt-priority-marker",
+});
+        
+    
+        var popup_0205c7495c3438eb1368b695919d7529 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_c3ae9ab1c31786217762ba4dc0255e8d = $(`<div id="html_c3ae9ab1c31786217762ba4dc0255e8d" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> HDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> Low<br>         <b>Rank:</b> 19<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 45.952916<br>         <b>Longitude:</b> -86.244862     </div>     </div>`)[0];
+                popup_0205c7495c3438eb1368b695919d7529.setContent(html_c3ae9ab1c31786217762ba4dc0255e8d);
+            
+        
+
+        marker_a8177d33e26b4c06216b9771be09050b.bindPopup(popup_0205c7495c3438eb1368b695919d7529)
+        ;
+
+        
+    
+    
+            marker_a8177d33e26b4c06216b9771be09050b.bindTooltip(
+                `<div>
+                     HDT | 1% Market Share<br>Priority: Low<br>Rank: 19<br>Required chargers: 2<br>Latitude: 45.952916<br>Longitude: -86.244862
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_a8177d33e26b4c06216b9771be09050b.setIcon(div_icon_4e2ed108dd757718101241c46689a669);
+            
+    
+            var marker_92978d67c499a9809a3d6a7e428cc062 = L.marker(
+                [44.589461, -83.316874],
+                {
+}
+            ).addTo(feature_group_01b9906ca2f1e943356f7dbf9eeb7778);
+        
+    
+            var div_icon_45b4f7a17a81faa3239fe8ba3eef4a4a = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003cpolygon\n            points=\"50,3 97,97 3,97\"\n            fill=\"blue\"\n            fill-opacity=\"0.65\"\n            stroke=\"blue\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "hdt-priority-marker",
+});
+        
+    
+        var popup_33e1c5315a5b27a8bd1141ed86fc7359 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_44d75f92d4f5d5c858da464bd286d7d8 = $(`<div id="html_44d75f92d4f5d5c858da464bd286d7d8" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> HDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> Low<br>         <b>Rank:</b> 20<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 44.589461<br>         <b>Longitude:</b> -83.316874     </div>     </div>`)[0];
+                popup_33e1c5315a5b27a8bd1141ed86fc7359.setContent(html_44d75f92d4f5d5c858da464bd286d7d8);
+            
+        
+
+        marker_92978d67c499a9809a3d6a7e428cc062.bindPopup(popup_33e1c5315a5b27a8bd1141ed86fc7359)
+        ;
+
+        
+    
+    
+            marker_92978d67c499a9809a3d6a7e428cc062.bindTooltip(
+                `<div>
+                     HDT | 1% Market Share<br>Priority: Low<br>Rank: 20<br>Required chargers: 2<br>Latitude: 44.589461<br>Longitude: -83.316874
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_92978d67c499a9809a3d6a7e428cc062.setIcon(div_icon_45b4f7a17a81faa3239fe8ba3eef4a4a);
+            
+    
+            var marker_3ab6624206fd392adb15d217fd380f29 = L.marker(
+                [46.093975, -85.339534],
+                {
+}
+            ).addTo(feature_group_01b9906ca2f1e943356f7dbf9eeb7778);
+        
+    
+            var div_icon_41e4925a07fcfc1192f3c28b927e3069 = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003cpolygon\n            points=\"50,3 97,97 3,97\"\n            fill=\"blue\"\n            fill-opacity=\"0.65\"\n            stroke=\"blue\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "hdt-priority-marker",
+});
+        
+    
+        var popup_882669dee91401fa359b8f190bff0def = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_acec240c759317a475fd68f9546e2d30 = $(`<div id="html_acec240c759317a475fd68f9546e2d30" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> HDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> Low<br>         <b>Rank:</b> 21<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 46.093975<br>         <b>Longitude:</b> -85.339534     </div>     </div>`)[0];
+                popup_882669dee91401fa359b8f190bff0def.setContent(html_acec240c759317a475fd68f9546e2d30);
+            
+        
+
+        marker_3ab6624206fd392adb15d217fd380f29.bindPopup(popup_882669dee91401fa359b8f190bff0def)
+        ;
+
+        
+    
+    
+            marker_3ab6624206fd392adb15d217fd380f29.bindTooltip(
+                `<div>
+                     HDT | 1% Market Share<br>Priority: Low<br>Rank: 21<br>Required chargers: 2<br>Latitude: 46.093975<br>Longitude: -85.339534
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_3ab6624206fd392adb15d217fd380f29.setIcon(div_icon_41e4925a07fcfc1192f3c28b927e3069);
+            
+    
+            var marker_b47f46357858adbb93eac85353c60798 = L.marker(
+                [46.58529, -88.472279],
+                {
+}
+            ).addTo(feature_group_01b9906ca2f1e943356f7dbf9eeb7778);
+        
+    
+            var div_icon_a9bc5c28092996e657b6b628a5f0779e = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003cpolygon\n            points=\"50,3 97,97 3,97\"\n            fill=\"blue\"\n            fill-opacity=\"0.65\"\n            stroke=\"blue\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "hdt-priority-marker",
+});
+        
+    
+        var popup_e29c908167e93ed01856501fa295cebf = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_22165b750770d70ae82bc991bafd1f16 = $(`<div id="html_22165b750770d70ae82bc991bafd1f16" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> HDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> Low<br>         <b>Rank:</b> 22<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 46.585290<br>         <b>Longitude:</b> -88.472279     </div>     </div>`)[0];
+                popup_e29c908167e93ed01856501fa295cebf.setContent(html_22165b750770d70ae82bc991bafd1f16);
+            
+        
+
+        marker_b47f46357858adbb93eac85353c60798.bindPopup(popup_e29c908167e93ed01856501fa295cebf)
+        ;
+
+        
+    
+    
+            marker_b47f46357858adbb93eac85353c60798.bindTooltip(
+                `<div>
+                     HDT | 1% Market Share<br>Priority: Low<br>Rank: 22<br>Required chargers: 2<br>Latitude: 46.585290<br>Longitude: -88.472279
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_b47f46357858adbb93eac85353c60798.setIcon(div_icon_a9bc5c28092996e657b6b628a5f0779e);
+            
+    
+            var marker_5f7a472e0a4813bc36cd1617765757a1 = L.marker(
+                [46.492086, -84.370597],
+                {
+}
+            ).addTo(feature_group_01b9906ca2f1e943356f7dbf9eeb7778);
+        
+    
+            var div_icon_ddf5d522eb4dc6685c2039c7c8a857f4 = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003cpolygon\n            points=\"50,3 97,97 3,97\"\n            fill=\"blue\"\n            fill-opacity=\"0.65\"\n            stroke=\"blue\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "hdt-priority-marker",
+});
+        
+    
+        var popup_7e5334a4fd4ba7a1e3b39cdc7e3946d1 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_dd8ef85b1e6adc8526f77be72fa28efc = $(`<div id="html_dd8ef85b1e6adc8526f77be72fa28efc" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> HDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> Low<br>         <b>Rank:</b> 23<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 46.492086<br>         <b>Longitude:</b> -84.370597     </div>     </div>`)[0];
+                popup_7e5334a4fd4ba7a1e3b39cdc7e3946d1.setContent(html_dd8ef85b1e6adc8526f77be72fa28efc);
+            
+        
+
+        marker_5f7a472e0a4813bc36cd1617765757a1.bindPopup(popup_7e5334a4fd4ba7a1e3b39cdc7e3946d1)
+        ;
+
+        
+    
+    
+            marker_5f7a472e0a4813bc36cd1617765757a1.bindTooltip(
+                `<div>
+                     HDT | 1% Market Share<br>Priority: Low<br>Rank: 23<br>Required chargers: 2<br>Latitude: 46.492086<br>Longitude: -84.370597
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_5f7a472e0a4813bc36cd1617765757a1.setIcon(div_icon_ddf5d522eb4dc6685c2039c7c8a857f4);
+            
+    
+            var marker_c405bb4df9b0e2a4caa0b5d2ba545026 = L.marker(
+                [45.926675, -86.974981],
+                {
+}
+            ).addTo(feature_group_01b9906ca2f1e943356f7dbf9eeb7778);
+        
+    
+            var div_icon_0af4b35c3e249b6a2b1e26a20d5b66d5 = L.divIcon({
+  "html": "\n    \u003csvg xmlns=\"http://www.w3.org/2000/svg\"\n         width=\"11.0\" height=\"11.0\"\n         viewBox=\"0 0 100 100\"\n         style=\"display:block; overflow:visible;\"\u003e\n        \n        \u003cpolygon\n            points=\"50,3 97,97 3,97\"\n            fill=\"blue\"\n            fill-opacity=\"0.65\"\n            stroke=\"blue\"\n            stroke-opacity=\"0.85\"\n            stroke-width=\"1.5\"\n            vector-effect=\"non-scaling-stroke\"\n        /\u003e\n        \n    \u003c/svg\u003e\n    ",
+  "iconSize": [11.0, 11.0],
+  "iconAnchor": [5.5, 5.5],
+  "className": "hdt-priority-marker",
+});
+        
+    
+        var popup_8c066f123bcfc72a4ed68ff6726f920a = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_7429115fa89473cc82b3e0745f419474 = $(`<div id="html_7429115fa89473cc82b3e0745f419474" style="width: 100.0%; height: 100.0%;">     <div style="font-size:13px;">         <b>Truck type:</b> HDT<br>         <b>EV market share:</b> 1%<br>         <b>Priority:</b> Low<br>         <b>Rank:</b> 24<br>         <b>Required chargers:</b> 2<br>         <b>Latitude:</b> 45.926675<br>         <b>Longitude:</b> -86.974981     </div>     </div>`)[0];
+                popup_8c066f123bcfc72a4ed68ff6726f920a.setContent(html_7429115fa89473cc82b3e0745f419474);
+            
+        
+
+        marker_c405bb4df9b0e2a4caa0b5d2ba545026.bindPopup(popup_8c066f123bcfc72a4ed68ff6726f920a)
+        ;
+
+        
+    
+    
+            marker_c405bb4df9b0e2a4caa0b5d2ba545026.bindTooltip(
+                `<div>
+                     HDT | 1% Market Share<br>Priority: Low<br>Rank: 24<br>Required chargers: 2<br>Latitude: 45.926675<br>Longitude: -86.974981
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_c405bb4df9b0e2a4caa0b5d2ba545026.setIcon(div_icon_0af4b35c3e249b6a2b1e26a20d5b66d5);
+            
+    
+            var layer_control_28e721d65e3bcb90515f3700f121fe0f_layers = {
+                base_layers : {
+                    "Light Background" : tile_layer_8f351fcb8064183c3e4a455de689540d,
+                },
+                overlays :  {
+                    "MDTs \u2014 Priority Locations \u2014 1% Market Share" : feature_group_65964524600b5bc787cc3acdb3acaf02,
+                    "HDTs \u2014 Priority Locations \u2014 1% Market Share" : feature_group_01b9906ca2f1e943356f7dbf9eeb7778,
+                },
+            };
+            let layer_control_28e721d65e3bcb90515f3700f121fe0f = L.control.layers(
+                layer_control_28e721d65e3bcb90515f3700f121fe0f_layers.base_layers,
+                layer_control_28e721d65e3bcb90515f3700f121fe0f_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": false,
+  "autoZIndex": true,
+}
+            ).addTo(map_bab99a47621131f5ff3edbc1b240a4f3);
+
+        
+    
+            map_bab99a47621131f5ff3edbc1b240a4f3.fitBounds(
+                [[41.809165, -88.472279], [46.58529, -82.488375]],
+                {"padding": [30, 30]}
+            );
+        
+</script>
+</html>
